@@ -44,8 +44,10 @@
         }
 
         .birth.selector {
+            gap: 20px;
             max-width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
@@ -206,7 +208,7 @@
     <div class="container">
         <div class="birth selector">
             <h1>🌞Birth Date: </h1>
-            <input type="date" name="Origin Time" id="oDate" placeholder="03/04/1970">
+            <input type="date" name="Origin Time" id="oDate">
         </div>
         <button class="calculate button" onclick="chageOTime()">Calculate</button>
         <div class="result frac container">
@@ -304,7 +306,7 @@
 
         const totalMilliSeconds = document.querySelector(".total .length.millisecond p")
 
-        let oTime = new Date()
+        let oTime = new Date("03/02/2000")
 
         const chageOTime = () => {
             let userinput = document.getElementById("oDate").value
