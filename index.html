@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo.png" type="image/png">
+    <title>Life Progress</title>
+
+    <meta property="og:title" content="Lime" />
+    <meta name="twitter:title" content="Lime" />
+
+    <meta name="description" content="Life time progress count." />
+    <meta property="og:description" content="Life time progress count." />
+    <meta name="twitter:description" content="Life time progress count." />
+
+    <meta property="og:image" content="./logo.png" />
+    <meta name="twitter:image" content="./logo.png" />
+
+    <style>
+        * {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        *::selection {
+            background-color: greenyellow;
+        }
+
+        body {
+            padding-left: 40px;
+            padding-right: 40px;
+            padding-top: 20px;
+        }
+
+        .container {
+            gap: 40px;
+            display: flex;
+            padding-top: 100px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .birth.selector {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .birth.selector h1 {
+            margin: 0px;
+            font-size: 30px;
+        }
+
+        ::-webkit-datetime-edit {
+            padding: 10px;
+        }
+
+        ::-webkit-datetime-edit-month-field {
+            padding: 2px;
+            border-radius: 10px;
+            background-color: #F6F6F6;
+            border: 2px solid black;
+        }
+
+        ::-webkit-datetime-edit-day-field {
+            padding: 2px;
+            border-radius: 10px;
+            background-color: #F6F6F6;
+            border: 2px solid black;
+        }
+
+        ::-webkit-datetime-edit-year-field {
+            padding: 2px;
+            border-radius: 10px;
+            background-color: #F6F6F6;
+            border: 2px solid black;
+        }
+
+        input[type="date"] {
+            padding: 5px;
+            border: 0px solid black;
+            border-radius: 5px;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .calculate.button {
+            background-color: black;
+            color: wheat;
+            font-size: 30px;
+            font-weight: 900;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .result {
+            min-width: 100%;
+            padding: 20px;
+            display: flex;
+            border-radius: 30px;
+            flex-direction: column;
+            background-color: black;
+        }
+
+
+        .result p {
+            font-size: 30px;
+            color: white;
+            font-weight: 900;
+        }
+
+        .result h1 {
+            color: white;
+            font-weight: 900;
+        }
+
+        .frac.items.container {
+            gap: 10px;
+            width: 100%;
+            padding: 10px;
+            align-items: flex-start;
+        }
+
+        .total.items.container {
+            gap: 10px;
+            width: 100%;
+            padding: 10px;
+            align-items: flex-end;
+        }
+
+        .length {
+            padding: 5px;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            border-radius: 10px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .length.year {
+            width: 85%;
+            background-color: #FF004D;
+        }
+
+        .length.month {
+            width: 80%;
+            background-color: #3300FF;
+        }
+
+        .length.week {
+            width: 75%;
+            background-color: #FF0000;
+        }
+
+        .length.day {
+            width: 70%;
+            background-color: #00D1FF;
+        }
+
+        .length.hour {
+            width: 65%;
+            background-color: #52FF00;
+        }
+
+        .length.minute {
+            width: 60%;
+            background-color: #FF8A00;
+        }
+
+        .length.second {
+            width: 55%;
+            background-color: #FFE600;
+        }
+
+        .length.millisecond {
+            width: 50%;
+            background-color: #FA00FF;
+        }
+
+        .author {
+            margin: 40px;
+        }
+
+        .author a {
+            font-size: 30px;
+            font-weight: 900;
+            color: #52FF00;
+        }
+
+        .source {
+            width: 100%;
+            display: flex;
+            font-size: 30px;
+            font-weight: 900;
+            color: #52FF00;
+            justify-content: flex-end;
+        }
+    </style>
+
+<body>
+    <a class="source" href="https://github.com/turaakk/lime" target="_blank">Github</a>
+    <div class="container">
+        <div class="birth selector">
+            <h1>🌞Birth Date: </h1>
+            <input type="date" name="Origin Time" id="oDate" placeholder="03/04/1970">
+        </div>
+        <button class="calculate button" onclick="chageOTime()">Calculate</button>
+        <div class="result frac container">
+            <h1>🔴Live for</h1>
+            <div class="frac items container">
+                <div class="length year">
+                    <p>20 years</p>
+                </div>
+                <div class="length month">
+                    <p>200 months</p>
+                </div>
+                <div class="length week">
+                    <p>2,340 weeks</p>
+                </div>
+                <div class="length day">
+                    <p>20,231 days</p>
+                </div>
+                <div class="length hour">
+                    <p>223,210 hours</p>
+                </div>
+                <div class="length minute">
+                    <p>723,330 minutes</p>
+                </div>
+                <div class="length second">
+                    <p>8,912,212 seconds</p>
+                </div>
+                <div class="length millisecond">
+                    <p>3223 m. seconds</p>
+                </div>
+            </div>
+        </div>
+        <div class="result total container">
+            <h1>📊Total</h1>
+            <div class="total items container">
+                <div class="length year">
+                    <p>20 years</p>
+                </div>
+                <div class="length month">
+                    <p>200 months</p>
+                </div>
+                <div class="length week">
+                    <p>2,340 weeks</p>
+                </div>
+                <div class="length day">
+                    <p>20,231 days</p>
+                </div>
+                <div class="length hour">
+                    <p>223,210 hours</p>
+                </div>
+                <div class="length minute">
+                    <p>723,330 minutes</p>
+                </div>
+                <div class="length second">
+                    <p>8,912,212 seconds</p>
+                </div>
+                <div class="length millisecond">
+                    <p>3223 m. seconds</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="author">Made By <a href="https://github.com/turaakk" target="_blank">turaa</a></p>
+
+    <script>
+
+        const fracYears = document.querySelector(".frac .length.year p")
+
+        const fracMonths = document.querySelector(".frac .length.month p")
+
+        const fracWeeks = document.querySelector(".frac .length.week p")
+
+        const fracDays = document.querySelector(".frac .length.day p")
+
+        const fracHours = document.querySelector(".frac .length.hour p")
+
+        const fracMinutes = document.querySelector(".frac .length.minute p")
+
+        const fracSeconds = document.querySelector(".frac .length.second p")
+
+        const fracMilliSeconds = document.querySelector(".frac .length.millisecond p")
+
+        const totalYears = document.querySelector(".total .length.year p")
+
+        const totalMonths = document.querySelector(".total .length.month p")
+
+        const totalWeeks = document.querySelector(".total .length.week p")
+
+        const totalDays = document.querySelector(".total .length.day p")
+
+        const totalHours = document.querySelector(".total .length.hour p")
+
+        const totalMinutes = document.querySelector(".total .length.minute p")
+
+        const totalSeconds = document.querySelector(".total .length.second p")
+
+        const totalMilliSeconds = document.querySelector(".total .length.millisecond p")
+
+        let oTime = new Date()
+
+        const chageOTime = () => {
+            let userinput = document.getElementById("oDate").value
+
+            if (userinput != '') {
+                oTime = new Date(userinput)
+            }
+        }
+
+        const calculate = () => {
+            let now = new Date()
+
+            const tMillisec = now.valueOf() - oTime.valueOf()
+
+            const getTime = (n) => {
+                return Intl.NumberFormat().format(Math.floor(tMillisec / n))
+            }
+
+            fracYears.textContent = `${getTime(31536000000)} years and`
+
+            fracMonths.textContent = `${Math.floor((tMillisec - (getTime(31536000000) * 31536000000)) / 2628000000)} months and`
+
+            fracWeeks.textContent = `${Math.floor(((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) / 7)} Weeks and`
+
+            fracDays.textContent = `${Math.floor((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) - (7 * Math.floor(((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) / 7))} days and`
+
+            fracHours.textContent = `${Math.floor(parseInt(getTime(3600000)) - (parseInt(getTime(86400000)) * 24))} hours and`
+
+            fracMinutes.textContent = `${now.getMinutes()} minutes and`
+
+            fracSeconds.textContent = `${now.getSeconds()} seconds and`
+
+            fracMilliSeconds.textContent = `${now.getMilliseconds()} m. seconds`
+
+            // Total
+            totalYears.textContent = `${getTime(31536000000)} years`
+
+            totalMonths.textContent = `${getTime(2628000000)} months`
+
+            totalWeeks.textContent = `${getTime(604800000)} Weeks`
+
+            totalDays.textContent = `${getTime(86400000)} days`
+
+            totalHours.textContent = `${getTime(3600000)} hours`
+
+            totalMinutes.textContent = `${getTime(60000)} minutes`
+
+            totalSeconds.textContent = `${getTime(1000)} seconds`
+
+            totalMilliSeconds.textContent = `${getTime(1)} m. seconds`
+
+        }
+
+        setInterval(() => {
+            calculate()
+        }, 1)
+
+    </script>
+</body>
+
+</html>
