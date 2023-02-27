@@ -5,18 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#317EFB" />
+
     <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/logo.png">
     <title>Life Progress</title>
 
-    <meta property="og:title" content="Lime" />
-    <meta name="twitter:title" content="Lime" />
-
     <meta name="description" content="Life time progress count." />
-    <meta property="og:description" content="Life time progress count." />
-    <meta name="twitter:description" content="Life time progress count." />
 
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lime" />
     <meta property="og:image" content="./logo.png" />
+    <meta property="og:description" content="Life time progress count." />
+
+    <meta name="twitter:description" content="Life time progress count." />
     <meta name="twitter:image" content="./logo.png" />
+    <meta name="twitter:title" content="Lime" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="turaakk">
+    <meta name="twitter:creator" content="turaakk">
 
     <style>
         * {
@@ -193,24 +200,42 @@
             color: #52FF00;
         }
 
-        .source {
+        .topnav {
             width: 100%;
             display: flex;
             font-size: 30px;
             font-weight: 900;
-            color: #52FF00;
+            gap: 20px;
             justify-content: flex-end;
+        }
+
+        .source {
+            color: #52FF00;
+        }
+
+        .darkmode {
+            color: #52FF00;
+            cursor: pointer;
+        }
+
+        .otimeview {
+            font-size: 20px;
+            font-weight: 900;
         }
     </style>
 
 <body>
-    <a class="source" href="https://github.com/turaakk/lime" target="_blank">Github</a>
+    <div class="topnav">
+        <div class="darkmode" onclick="onDarkMode()">Dark</div>
+        <a class="source" href="https://github.com/turaakk/lime" target="_blank">Github</a>
+    </div>
     <div class="container">
         <div class="birth selector">
             <h1>🌞Birth Date: </h1>
             <input type="date" name="Origin Time" id="oDate">
         </div>
         <button class="calculate button" onclick="chageOTime()">Calculate</button>
+        <div class="otimeview"></div>
         <div class="result frac container">
             <h1>🔴Live for</h1>
             <div class="frac items container">
@@ -274,51 +299,74 @@
 
     <script>
 
+        // Time Display elements
         const fracYears = document.querySelector(".frac .length.year p")
-
         const fracMonths = document.querySelector(".frac .length.month p")
-
         const fracWeeks = document.querySelector(".frac .length.week p")
-
         const fracDays = document.querySelector(".frac .length.day p")
-
         const fracHours = document.querySelector(".frac .length.hour p")
-
         const fracMinutes = document.querySelector(".frac .length.minute p")
-
         const fracSeconds = document.querySelector(".frac .length.second p")
-
         const fracMilliSeconds = document.querySelector(".frac .length.millisecond p")
-
         const totalYears = document.querySelector(".total .length.year p")
-
         const totalMonths = document.querySelector(".total .length.month p")
-
         const totalWeeks = document.querySelector(".total .length.week p")
-
         const totalDays = document.querySelector(".total .length.day p")
-
         const totalHours = document.querySelector(".total .length.hour p")
-
         const totalMinutes = document.querySelector(".total .length.minute p")
-
         const totalSeconds = document.querySelector(".total .length.second p")
-
         const totalMilliSeconds = document.querySelector(".total .length.millisecond p")
 
+        // Persistant Dark Mode
+        const storedDark = window.localStorage.getItem('isDarkMode')
+        let isDarkMode
+        const background = document.querySelector("body").style
+
+        if (storedDark == "true") {
+            isDarkMode = true
+            background.backgroundColor = "black"
+            background.color = "white"
+        } else {
+            isDarkMode = false
+            background.backgroundColor = "white"
+            background.color = "black"
+        }
+
+        const onDarkMode = () => {
+            isDarkMode = !isDarkMode
+            window.localStorage.setItem('isDarkMode', isDarkMode);
+            if (isDarkMode) {
+                background.backgroundColor = "black"
+                background.color = "white"
+            } else {
+                background.backgroundColor = "white"
+                background.color = "black"
+            }
+        }
+
+        // Time Calculation
         let oTime = new Date("03/02/2000")
+
+        const oTimeViewEle = document.querySelector(".otimeview")
 
         const chageOTime = () => {
             let userinput = document.getElementById("oDate").value
 
             if (userinput != '') {
-                oTime = new Date(userinput)
+                if (new Date(userinput).getFullYear() <= new Date().getFullYear()) {
+                    if (new Date(userinput).getMonth() <= new Date().getMonth()) {
+                        if (new Date(userinput).getDate() <= new Date().getDate()) {
+                            oTime = new Date(userinput)
+                        }
+                    }
+                }
             }
         }
 
         const calculate = () => {
-            let now = new Date()
+            oTimeViewEle.textContent = "Origin time  : " + Intl.DateTimeFormat().format(oTime)
 
+            let now = new Date()
             const tMillisec = now.valueOf() - oTime.valueOf()
 
             const getTime = (n) => {
@@ -326,36 +374,22 @@
             }
 
             fracYears.textContent = `${getTime(31536000000)} years and`
-
             fracMonths.textContent = `${Math.floor((tMillisec - (getTime(31536000000) * 31536000000)) / 2628000000)} months and`
-
             fracWeeks.textContent = `${Math.floor(((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) / 7)} Weeks and`
-
             fracDays.textContent = `${Math.floor((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) - (7 * Math.floor(((tMillisec - (getTime(2628000000) * 2628000000)) / 86400000) / 7))} days and`
-
             fracHours.textContent = `${Math.floor(parseInt(getTime(3600000)) - (parseInt(getTime(86400000)) * 24))} hours and`
-
             fracMinutes.textContent = `${now.getMinutes()} minutes and`
-
             fracSeconds.textContent = `${now.getSeconds()} seconds and`
-
             fracMilliSeconds.textContent = `${now.getMilliseconds()} m. seconds`
 
             // Total
             totalYears.textContent = `${getTime(31536000000)} years`
-
             totalMonths.textContent = `${getTime(2628000000)} months`
-
             totalWeeks.textContent = `${getTime(604800000)} Weeks`
-
             totalDays.textContent = `${getTime(86400000)} days`
-
             totalHours.textContent = `${getTime(3600000)} hours`
-
             totalMinutes.textContent = `${getTime(60000)} minutes`
-
             totalSeconds.textContent = `${getTime(1000)} seconds`
-
             totalMilliSeconds.textContent = `${getTime(1)} m. seconds`
 
         }
