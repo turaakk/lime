@@ -7,20 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#317EFB" />
 
-    <link rel="icon" href="/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="/logo.png">
+    <link href="/manifest.json" rel="manifest">
+
+    <link rel="icon" href="/assets/images/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <title>Life Time Count</title>
 
     <meta name="description" content="Life time progress count." />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Lime" />
-    <meta property="og:image" content="./banner.png" />
+    <meta property="og:image" content="./assets/images/banner.png" />
     <meta property="og:description" content="Life time progress count." />
 
     <meta name="twitter:title" content="Lime" />
     <meta name="twitter:description" content="Life time progress count." />
-    <meta name="twitter:image" content="./banner.png" />
+    <meta name="twitter:image" content="./assets/images/banner.png" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="turaakk">
     <meta name="twitter:creator" content="turaakk">
@@ -226,7 +228,7 @@
 
 <body>
     <div class="topnav">
-        <div class="darkmode" onclick="onDarkMode()">Dark</div>
+        <div class="darkmode" id="themebutton">Dark</div>
         <a class="source" href="https://github.com/turaakk/lime" target="_blank">Github</a>
     </div>
     <div class="container">
@@ -234,7 +236,7 @@
             <h1>🌞Birth Date: </h1>
             <input type="date" name="Origin Time" id="oDate">
         </div>
-        <button class="calculate button" onclick="chageOTime()">Calculate</button>
+        <button class="calculate button" id="calculatebutton">Calculate</button>
         <div class="otimeview"></div>
         <div class="result frac container">
             <h1>🔴Live for</h1>
@@ -295,9 +297,30 @@
             </div>
         </div>
     </div>
-    <p class="author">Made By <a href="https://github.com/turaakk" target="_blank">turaa</a></p>
+    <p class="author">By <a href="https://github.com/turaakk" target="_blank">turaa</a></p>
 
-    <script>
+    <script type="module">
+
+        // Service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    let reg
+
+                    if (import.meta.env?.DEV) {
+                        reg = await navigator.serviceWorker.register('/service-worker.js', {
+                            type: 'module',
+                        })
+                    } else {
+                        reg = await navigator.serviceWorker.register('/service-worker.js')
+                    }
+
+                    console.log('Service worker registered! 😎', reg)
+                } catch (err) {
+                    console.log('😥 Service worker registration failed: ', err)
+                }
+            })
+        }
 
         // Time Display elements
         const fracYears = document.querySelector(".frac .length.year p")
@@ -344,6 +367,8 @@
             }
         }
 
+        document.getElementById("themebutton").addEventListener("click", onDarkMode, false)
+
         // Time Calculation
         let oTime = new Date("03/02/2000")
         const oTimeViewEle = document.querySelector(".otimeview")
@@ -357,6 +382,8 @@
                 oTime = new Date(userinput)
             }
         }
+
+        document.getElementById("calculatebutton").addEventListener("click", chageOTime, false)
 
         const calculate = () => {
             oTimeViewEle.textContent = "Origin time  : " + Intl.DateTimeFormat().format(oTime)
